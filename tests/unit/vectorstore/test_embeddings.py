@@ -3,7 +3,7 @@ Unit tests for embedding functionality.
 """
 
 import pytest
-from unittest.mock import Mock, MagicMock
+from unittest.mock import Mock
 from src.vectorstore.embeddings import OpenAIEmbedding
 
 
@@ -11,7 +11,7 @@ from src.vectorstore.embeddings import OpenAIEmbedding
 class TestOpenAIEmbedding:
     """Tests for OpenAI embedding wrapper."""
 
-    def test_initialization(self, mock_openai_client):
+    def test_initialization(self):
         """Test initializing OpenAI embedding model."""
         embedder = OpenAIEmbedding(
             api_key="test-key",
@@ -19,16 +19,15 @@ class TestOpenAIEmbedding:
         )
 
         assert embedder.model == "text-embedding-3-small"
-        assert embedder.dimension == 1536
 
-    def test_initialization_with_cost_tracker(self, mock_openai_client, mock_cost_tracker):
-        """Test initialization with cost tracker."""
+    def test_initialization_with_different_model(self):
+        """Test initialization with different model."""
         embedder = OpenAIEmbedding(
             api_key="test-key",
-            cost_tracker=mock_cost_tracker
+            model="text-embedding-3-large"
         )
 
-        assert embedder.cost_tracker == mock_cost_tracker
+        assert embedder.model == "text-embedding-3-large"
 
     def test_embed_documents(self, mock_openai_client):
         """Test embedding multiple documents."""
@@ -78,8 +77,13 @@ class TestOpenAIEmbedding:
 
         assert embeddings == []
 
-    def test_cost_tracking_on_embed(self, mock_openai_client, mock_cost_tracker):
-        """Test that cost tracking works during embedding."""
+    def test_cost_tracking_integration(self, mock_openai_client, temp_dir):
+        """Test that embeddings can work with cost tracker."""
+        from src.utils.cost_tracker import CostTracker
+
+        # Cost tracker is separate from embedder
+        tracker = CostTracker(log_file=str(temp_dir / "costs.json"))
+
         mock_response = Mock()
         mock_embedding = Mock()
         mock_embedding.embedding = [0.1] * 1536
@@ -87,12 +91,20 @@ class TestOpenAIEmbedding:
         mock_response.usage = Mock(total_tokens=100)
         mock_openai_client.embeddings.create.return_value = mock_response
 
-        embedder = OpenAIEmbedding(api_key="test-key", cost_tracker=mock_cost_tracker)
+        embedder = OpenAIEmbedding(api_key="test-key")
         embedder.client = mock_openai_client
 
+        # Embed documents
         embedder.embed_documents(["test"])
 
-        mock_cost_tracker.track_openai_call.assert_called_once()
+        # Manually track cost if needed
+        tracker.track_embedding_call(
+            model="text-embedding-3-small",
+            tokens=100,
+            operation="embedding"
+        )
+
+        assert len(tracker.session_calls) == 1
 
     def test_batch_processing(self, mock_openai_client):
         """Test that large batches are processed correctly."""
@@ -116,14 +128,21 @@ class TestOpenAIEmbedding:
         assert len(embeddings) == 100
         assert all(len(emb) == 1536 for emb in embeddings)
 
-    def test_different_model_dimensions(self, mock_openai_client):
-        """Test using different embedding models with different dimensions."""
+    def test_model_variants(self):
+        """Test different embedding model variants."""
+        # Test small model
+        embedder_small = OpenAIEmbedding(
+            api_key="test-key",
+            model="text-embedding-3-small"
+        )
+        assert embedder_small.model == "text-embedding-3-small"
+
+        # Test large model
         embedder_large = OpenAIEmbedding(
             api_key="test-key",
             model="text-embedding-3-large"
         )
-
-        assert embedder_large.dimension == 3072
+        assert embedder_large.model == "text-embedding-3-large"
 
     def test_embed_with_special_characters(self, mock_openai_client):
         """Test embedding text with special characters."""

@@ -115,10 +115,12 @@ class TestPDFLoader:
     @patch('fitz.open')
     def test_load_pdf_source_with_download(self, mock_fitz_open, mock_get):
         """Test loading PDF from URL with download."""
-        # Mock HTTP response
+        # Mock HTTP response with iterable iter_content
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = b"%PDF-1.4 test content"
+        # Make iter_content return an iterable of chunks
+        mock_response.iter_content = Mock(return_value=[b"%PDF-1.4 ", b"test ", b"content"])
         mock_get.return_value = mock_response
 
         # Mock PDF extraction

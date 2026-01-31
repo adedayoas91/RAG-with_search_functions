@@ -64,9 +64,13 @@ class TestYouTubeBot:
         assert "Good segment" in result
         assert "Another good one" in result
 
+    @patch('src.ingestion.yt_bot.get_video_id')
     @patch('src.ingestion.yt_bot.YouTubeTranscriptApi')
-    def test_load_youtube_video_success(self, mock_api, mock_youtube_transcript):
+    def test_load_youtube_video_success(self, mock_api, mock_get_video_id, mock_youtube_transcript):
         """Test successfully loading a YouTube video."""
+        # Mock video ID extraction (YouTube IDs are 11 chars, but test uses "test123")
+        mock_get_video_id.return_value = "test123"
+
         # Mock the API
         mock_transcript_list = Mock()
         mock_transcript = Mock()
