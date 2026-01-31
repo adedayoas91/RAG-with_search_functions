@@ -11,6 +11,8 @@ wheels/
 .venv
 data/downloads
 dir/
-TEST_*
+TEST_STATUS_SUMMARY.md
+TEST_SUMMARY.md
+TEST_FIXES_NEEDED.md
 DOCUMENT_SOURCES.md 
 FEATURE_SUMMARY.md
