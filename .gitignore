@@ -5,6 +5,14 @@ build/
 dist/
 wheels/
 *.egg-info
+.env
 
 # Virtual environments
 .venv
+data/downloads
+dir/
+TEST_STATUS_SUMMARY.md
+TESTING_SUMMARY.md
+TEST_FIXES_NEEDED.md
+DOCUMENT_SOURCES.md 
+FEATURE_SUMMARY.md
