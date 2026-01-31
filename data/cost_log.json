@@ -1,0 +1,654 @@
+[
+  {
+    "timestamp": "2026-01-31T16:59:07.516342",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "Python programming basics",
+      "search_depth": "advanced",
+      "num_results": 3
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:08:11.334743",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "Python programming basics",
+      "search_depth": "advanced",
+      "num_results": 3
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:11:27.427257",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "Python programming basics",
+      "search_depth": "advanced",
+      "num_results": 3
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:14:36.347984",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "causality in philosophy",
+      "search_depth": "advanced",
+      "num_results": 10
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:19:20.588341",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "causality in philosophy",
+      "search_depth": "advanced",
+      "num_results": 10
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:19:47.534034",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "causal inference",
+      "search_depth": "advanced",
+      "num_results": 10
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:20:23.592440",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "what is causal inference?",
+      "search_depth": "advanced",
+      "num_results": 10
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:20:27.455424",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 329,
+    "output_tokens": 75,
+    "cost": 9.434999999999999e-05,
+    "metadata": {
+      "source_url": "https://www.ibm.com/think/topics/causal-inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:20:28.092093",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 465,
+    "output_tokens": 74,
+    "cost": 0.00011415,
+    "metadata": {
+      "source_url": "https://en.wikipedia.org/wiki/Causal_inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:20:28.605368",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 358,
+    "output_tokens": 88,
+    "cost": 0.00010649999999999999,
+    "metadata": {
+      "source_url": "https://www.carelonresearch.com/perspectives/what-is-causal-inference-and-when-do-you-need-it"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:20:28.725052",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 464,
+    "output_tokens": 103,
+    "cost": 0.0001314,
+    "metadata": {
+      "source_url": "https://irrc.education.uiowa.edu/blog/2021/02/technically-speaking-what-causal-inference-and-why-it-important"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:21:05.776505",
+    "provider": "openai",
+    "operation": "answer_generation",
+    "model": "gpt-4o",
+    "input_tokens": 976,
+    "output_tokens": 230,
+    "cost": 0.004739999999999999,
+    "metadata": {
+      "query": "what is causal inference?"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:49:01.027163",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "causality in neuroscience",
+      "search_depth": "advanced",
+      "num_results": 10
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:50:09.251502",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "How is causality used in Neuroscience?",
+      "search_depth": "advanced",
+      "num_results": 10
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:51:19.554357",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "what is causal inference?",
+      "search_depth": "advanced",
+      "num_results": 10
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:51:22.275382",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 354,
+    "output_tokens": 65,
+    "cost": 9.209999999999999e-05,
+    "metadata": {
+      "source_url": "https://en.wikipedia.org/wiki/Causal_inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:51:22.737405",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 298,
+    "output_tokens": 80,
+    "cost": 9.269999999999999e-05,
+    "metadata": {
+      "source_url": "https://www.carelonresearch.com/perspectives/what-is-causal-inference-and-when-do-you-need-it"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:51:23.487227",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 503,
+    "output_tokens": 93,
+    "cost": 0.00013125,
+    "metadata": {
+      "source_url": "https://www.sciencedirect.com/topics/psychology/causal-inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T17:51:40.963146",
+    "provider": "openai",
+    "operation": "answer_generation",
+    "model": "gpt-4o",
+    "input_tokens": 910,
+    "output_tokens": 118,
+    "cost": 0.003455,
+    "metadata": {
+      "query": "what is causal inference?"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:11.323312",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "What is causal inference?",
+      "search_depth": "advanced",
+      "num_results": 100
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:14.750021",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 124,
+    "output_tokens": 54,
+    "cost": 5.099999999999999e-05,
+    "metadata": {
+      "source_url": "https://www.ncrm.ac.uk/resources/video/?id=9596"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:14.878086",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 354,
+    "output_tokens": 64,
+    "cost": 9.149999999999999e-05,
+    "metadata": {
+      "source_url": "https://en.wikipedia.org/wiki/Causal_inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:14.967872",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 127,
+    "output_tokens": 59,
+    "cost": 5.4449999999999995e-05,
+    "metadata": {
+      "source_url": "https://www.sonyresearchindia.com/causal-inference-the-question-of-why-in-machine-learning-and-business-analytics/"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:15.225894",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 102,
+    "output_tokens": 44,
+    "cost": 4.17e-05,
+    "metadata": {
+      "source_url": "https://www.stat.purdue.edu/~sabbaghi/teaching/causalML/Introduction.html"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:15.429329",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 98,
+    "output_tokens": 63,
+    "cost": 5.2499999999999995e-05,
+    "metadata": {
+      "source_url": "https://www.reddit.com/r/datascience/comments/18xtii1/what_exactly_is_causal_inference_how_do_you_use/"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:15.895636",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 298,
+    "output_tokens": 85,
+    "cost": 9.57e-05,
+    "metadata": {
+      "source_url": "https://www.carelonresearch.com/perspectives/what-is-causal-inference-and-when-do-you-need-it"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:15.899670",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 130,
+    "output_tokens": 78,
+    "cost": 6.63e-05,
+    "metadata": {
+      "source_url": "https://medium.com/data-science/what-is-causal-inference-48c57d848242"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:15.909159",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 121,
+    "output_tokens": 55,
+    "cost": 5.1149999999999996e-05,
+    "metadata": {
+      "source_url": "https://medium.com/@ab2abhinav/causal-inference-vs-a-b-testing-unraveling-the-threads-of-causation-b871f65d16b5"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:43:16.000583",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 101,
+    "output_tokens": 74,
+    "cost": 5.955e-05,
+    "metadata": {
+      "source_url": "https://www.youtube.com/watch?v=dFp2Ou52-po"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:52:48.855023",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "What is causal inference?",
+      "search_depth": "advanced",
+      "num_results": 100
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:52:52.354862",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 124,
+    "output_tokens": 42,
+    "cost": 4.3799999999999994e-05,
+    "metadata": {
+      "source_url": "https://www.stat.purdue.edu/~sabbaghi/teaching/DTSS/Causal+Epiphanies.html"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:52:52.497637",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 354,
+    "output_tokens": 63,
+    "cost": 9.089999999999999e-05,
+    "metadata": {
+      "source_url": "https://en.wikipedia.org/wiki/Causal_inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:52:52.650739",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 98,
+    "output_tokens": 57,
+    "cost": 4.8899999999999996e-05,
+    "metadata": {
+      "source_url": "https://www.reddit.com/r/datascience/comments/18xtii1/what_exactly_is_causal_inference_how_do_you_use/"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:52:53.171825",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 494,
+    "output_tokens": 93,
+    "cost": 0.00012989999999999999,
+    "metadata": {
+      "source_url": "https://www.analytics-toolkit.com/glossary/causal-inference/"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:29.522632",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "What is causal inference?",
+      "search_depth": "advanced",
+      "num_results": 100
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:32.114949",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 106,
+    "output_tokens": 43,
+    "cost": 4.17e-05,
+    "metadata": {
+      "source_url": "https://kojinoshiba.com/causal+inference/theory-behind-ab-testing/"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:32.146264",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 97,
+    "output_tokens": 46,
+    "cost": 4.2149999999999995e-05,
+    "metadata": {
+      "source_url": "https://www.sciencedirect.com/topics/psychology/causal-inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:32.278116",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 124,
+    "output_tokens": 54,
+    "cost": 5.099999999999999e-05,
+    "metadata": {
+      "source_url": "https://www.ncrm.ac.uk/resources/video/?id=9596"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:32.678188",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 358,
+    "output_tokens": 92,
+    "cost": 0.00010889999999999999,
+    "metadata": {
+      "source_url": "https://www.carelonresearch.com/perspectives/what-is-causal-inference-and-when-do-you-need-it"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:32.686338",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 98,
+    "output_tokens": 66,
+    "cost": 5.43e-05,
+    "metadata": {
+      "source_url": "https://www.reddit.com/r/datascience/comments/18xtii1/what_exactly_is_causal_inference_how_do_you_use/"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:32.689224",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 130,
+    "output_tokens": 75,
+    "cost": 6.45e-05,
+    "metadata": {
+      "source_url": "https://medium.com/data-science/what-is-causal-inference-48c57d848242"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:32.694375",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 329,
+    "output_tokens": 78,
+    "cost": 9.615e-05,
+    "metadata": {
+      "source_url": "https://www.ibm.com/think/topics/causal-inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:33.392833",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 464,
+    "output_tokens": 96,
+    "cost": 0.0001272,
+    "metadata": {
+      "source_url": "https://irrc.education.uiowa.edu/blog/2021/02/technically-speaking-what-causal-inference-and-why-it-important"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:33.399128",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 369,
+    "output_tokens": 69,
+    "cost": 9.675e-05,
+    "metadata": {
+      "source_url": "https://thedecisionlab.com/reference-guide/statistics/casual-inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:53:33.702555",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 354,
+    "output_tokens": 75,
+    "cost": 9.809999999999999e-05,
+    "metadata": {
+      "source_url": "https://en.wikipedia.org/wiki/Causal_inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T18:54:06.876187",
+    "provider": "openai",
+    "operation": "answer_generation",
+    "model": "gpt-4o",
+    "input_tokens": 920,
+    "output_tokens": 193,
+    "cost": 0.00423,
+    "metadata": {
+      "query": "What is causal inference?"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T20:01:22.537472",
+    "provider": "tavily",
+    "operation": "search",
+    "model": "tavily-advanced",
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.01,
+    "metadata": {
+      "query": "What is causal inference?",
+      "search_depth": "advanced",
+      "num_results": 100
+    }
+  },
+  {
+    "timestamp": "2026-01-31T20:01:26.939722",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 352,
+    "output_tokens": 80,
+    "cost": 0.00010079999999999998,
+    "metadata": {
+      "source_url": "https://en.wikipedia.org/wiki/Causal_inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T20:01:27.096592",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 464,
+    "output_tokens": 94,
+    "cost": 0.000126,
+    "metadata": {
+      "source_url": "https://irrc.education.uiowa.edu/blog/2021/02/technically-speaking-what-causal-inference-and-why-it-important"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T20:01:27.373941",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 358,
+    "output_tokens": 76,
+    "cost": 9.929999999999999e-05,
+    "metadata": {
+      "source_url": "https://www.carelonresearch.com/perspectives/what-is-causal-inference-and-when-do-you-need-it"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T20:01:27.471833",
+    "provider": "openai",
+    "operation": "summarization",
+    "model": "gpt-4o-mini",
+    "input_tokens": 329,
+    "output_tokens": 83,
+    "cost": 9.915e-05,
+    "metadata": {
+      "source_url": "https://www.ibm.com/think/topics/causal-inference"
+    }
+  },
+  {
+    "timestamp": "2026-01-31T20:04:59.260481",
+    "provider": "openai",
+    "operation": "answer_generation",
+    "model": "gpt-4o",
+    "input_tokens": 955,
+    "output_tokens": 127,
+    "cost": 0.0036575,
+    "metadata": {
+      "query": "What is causal inference?"
+    }
+  }
+]

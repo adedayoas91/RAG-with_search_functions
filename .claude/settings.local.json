@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python main.py:*)",
+      "Bash(uv sync:*)",
+      "Bash(python:*)",
+      "Bash(uv add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nSwitch to Google Search, add parallelization, and improve download handling\n\nMajor changes:\n1. Replaced Tavily with Google Search (google_search.py):\n   - Fetches up to 100 sources per query\n   - Built-in paywall detection and filtering\n   - Accessibility checking before including sources\n   - No API key required for basic usage\n\n2. Enhanced download handling (article_downloader.py):\n   - Parallel downloads using ThreadPoolExecutor (5 workers)\n   - Ensures minimum 10 successful downloads before proceeding\n   - User confirmation if fewer than 10 downloads\n   - Continues until target is reached\n\n3. Ray-based parallelization (parallel_embedding.py):\n   - Parallel document chunking with Ray\n   - Parallel embedding generation with Ray actors\n   - Configurable number of workers (default: 4)\n   - Automatic Ray initialization and cleanup\n\n4. Main pipeline updates (main.py):\n   - Integrated Google Search client\n   - Added download directory cleanup confirmation\n   - Parallel chunking enabled by default\n   - Ray shutdown in finally block for proper cleanup\n\n5. Dependencies added:\n   - googlesearch-python==1.3.0\n   - ray[default]==2.48.0 with 13 sub-dependencies\n\nPerformance improvements:\n- 5x faster downloads with parallel workers\n- 4x faster chunking with Ray\n- Distributed embedding generation\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git restore:*)",
+      "Bash(git commit:*)",
+      "Bash(uv run pytest:*)"
+    ]
+  }
+}

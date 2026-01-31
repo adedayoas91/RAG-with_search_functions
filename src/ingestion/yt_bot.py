@@ -1,77 +1,194 @@
-# Import necessary libraries for the YouTube bot
-import gradio as gr
-import re  #For extracting video id 
-from youtube_transcript_api import YouTubeTranscriptApi  # For extracting transcripts from YouTube videos
-from langchain.text_splitter import RecursiveCharacterTextSplitter  # For splitting text into manageable segments
-from ibm_watsonx_ai.foundation_models.utils.enums import ModelTypes  # For specifying model types
-from ibm_watsonx_ai import APIClient, Credentials  # For API client and credentials management
-from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams  # For managing model parameters
-from ibm_watsonx_ai.foundation_models.utils.enums import DecodingMethods  # For defining decoding methods
-from langchain_ibm import WatsonxLLM, WatsonxEmbeddings  # For interacting with IBM's LLM and embeddings
-from ibm_watsonx_ai.foundation_models.utils import get_embedding_model_specs  # For retrieving model specifications
-from ibm_watsonx_ai.foundation_models.utils.enums import EmbeddingTypes  # For specifying types of embeddings
-from langchain_community.vectorstores import FAISS  # For efficient vector storage and similarity search
-from langchain.chains import LLMChain  # For creating chains of operations with LLMs
-from langchain.prompts import PromptTemplate  # For defining prompt templates
-from dotenv import load_dotenv  # For loading environment variables from .env file
-import os  # For interacting with the operating system
-from langchain.output_parsers import StrOutputParser  # For parsing output as a string
-from langchain.memory import ConversationBufferMemory  # For managing conversation history
-from langchain.callbacks import StdOutCallbackHandler  # For displaying progress in the console
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler  # For streaming output to the console
-from langchain.callbacks.streaming_text import StreamingTextCallbackHandler  # For streaming output to the console
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler  # For streaming output to the console
+"""
+YouTube transcript extraction for RAG ingestion.
 
-def get_video_id(url):    
-    # Regex pattern to match YouTube video URLs
-    pattern = r'https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})'
-    match = re.search(pattern, url)
-    return match.group(1) if match else None
+This module provides functions to extract transcripts from YouTube videos
+and convert them to LangChain Document format.
+"""
 
-def get_transcript(url):
-    # Extracts the video ID from the URL
-    video_id = get_video_id(url)
-    
-    # Create a YouTubeTranscriptApi() object
-    ytt_api = YouTubeTranscriptApi()
-    
-    # Fetch the list of available transcripts for the given YouTube video
-    transcripts = ytt_api.list(video_id)
-    
-    transcript = ""
-    for t in transcripts:
-        # Check if the transcript's language is English
-        if t.language_code == 'en':
-            if t.is_generated:
-                # If no transcript has been set yet, use the auto-generated one
-                if len(transcript) == 0:
-                    transcript = t.fetch()
-            else:
-                # If a manually created transcript is found, use it (overrides auto-generated)
-                transcript = t.fetch()
-                break  # Prioritize the manually created transcript, exit the loop
-    
-    return transcript if transcript else None
+import re
+from typing import Optional
+from youtube_transcript_api import YouTubeTranscriptApi
+from langchain_core.documents import Document
 
-def process(transcript):
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
+
+def get_video_id(url: str) -> Optional[str]:
     """
-    Processes the transcript by formatting it and returning it as a single string.
+    Extract video ID from YouTube URL.
+
     Args:
-        transcript: The transcript to process.
+        url: YouTube video URL
+
     Returns:
-        A string containing the formatted transcript.
+        Video ID if found, None otherwise
+
+    Examples:
+        >>> get_video_id("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        'dQw4w9WgXcQ'
     """
+    # Support multiple YouTube URL formats
+    patterns = [
+        r'youtube\.com/watch\?v=([a-zA-Z0-9_-]{11})',  # Standard format
+        r'youtu\.be/([a-zA-Z0-9_-]{11})',              # Short format
+        r'youtube\.com/embed/([a-zA-Z0-9_-]{11})',     # Embed format
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, url)
+        if match:
+            return match.group(1)
+
+    logger.warning(f"Could not extract video ID from URL: {url}")
+    return None
+
+def get_transcript(url: str) -> Optional[list]:
+    """
+    Extract English transcript from YouTube video.
+
+    Prioritizes manually created transcripts over auto-generated ones.
+
+    Args:
+        url: YouTube video URL
+
+    Returns:
+        List of transcript segments (dicts with 'text', 'start', 'duration')
+        or None if no transcript found
+
+    Raises:
+        Exception: If video ID is invalid or transcript unavailable
+    """
+    video_id = get_video_id(url)
+
+    if not video_id:
+        raise ValueError(f"Invalid YouTube URL: {url}")
+
+    try:
+        # Fetch the list of available transcripts
+        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+
+        transcript = None
+
+        # Try to get manually created English transcript first
+        try:
+            transcript = transcript_list.find_manually_created_transcript(['en'])
+            logger.info(f"Found manually created English transcript for {video_id}")
+        except:
+            # Fall back to auto-generated English transcript
+            try:
+                transcript = transcript_list.find_generated_transcript(['en'])
+                logger.info(f"Found auto-generated English transcript for {video_id}")
+            except:
+                logger.warning(f"No English transcript available for {video_id}")
+                return None
+
+        if transcript:
+            return transcript.fetch()
+
+        return None
+
+    except Exception as e:
+        logger.error(f"Error fetching transcript for {video_id}: {str(e)}")
+        raise
+
+def process(transcript: list) -> str:
+    """
+    Process transcript segments into a formatted string.
+
+    Args:
+        transcript: List of transcript segments (dicts with 'text', 'start', 'duration')
+
+    Returns:
+        Formatted transcript string with timestamps
+    """
+    if not transcript:
+        return ""
+
     # Initialize an empty string to hold the formatted transcript
     txt = ""
-    
+
     # Loop through each entry in the transcript
-    for i in transcript:
+    for segment in transcript:
         try:
+            # Access dictionary keys (not attributes)
+            text = segment['text']
+            start = segment['start']
+
+            # Format timestamp as MM:SS
+            minutes = int(start // 60)
+            seconds = int(start % 60)
+            timestamp = f"{minutes:02d}:{seconds:02d}"
+
             # Append the text and its start time to the output string
-            txt += f"Text: {i.text} Start: {i.start}\n"
-        except KeyError:
-            # If there is an issue accessing 'text' or 'start', skip this entry
-            pass
-            
-    # Return the processed transcript as a single string
-    return txt
+            txt += f"[{timestamp}] {text}\n"
+
+        except (KeyError, TypeError) as e:
+            # If there is an issue accessing keys, skip this entry
+            logger.warning(f"Skipping malformed transcript segment: {e}")
+            continue
+
+    return txt.strip()
+
+
+def load_youtube_video(url: str) -> Document:
+    """
+    Load YouTube video transcript as a LangChain Document.
+
+    This is the main function to use for loading YouTube videos into the RAG system.
+
+    Args:
+        url: YouTube video URL
+
+    Returns:
+        LangChain Document with transcript text and metadata
+
+    Raises:
+        ValueError: If URL is invalid
+        Exception: If transcript cannot be fetched
+
+    Example:
+        >>> doc = load_youtube_video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        >>> print(doc.page_content[:100])
+        >>> print(doc.metadata)
+    """
+    logger.info(f"Loading YouTube video: {url}")
+
+    try:
+        # Get transcript
+        transcript = get_transcript(url)
+
+        if not transcript:
+            raise ValueError(f"No transcript available for video: {url}")
+
+        # Process transcript into formatted text
+        text = process(transcript)
+
+        if not text:
+            raise ValueError(f"Empty transcript for video: {url}")
+
+        # Extract video ID for metadata
+        video_id = get_video_id(url)
+
+        # Create Document with metadata
+        doc = Document(
+            page_content=text,
+            metadata={
+                "source": url,
+                "source_type": "youtube",
+                "video_id": video_id,
+                "transcript_length": len(text),
+                "num_segments": len(transcript)
+            }
+        )
+
+        logger.info(
+            f"Successfully loaded YouTube video {video_id}: "
+            f"{len(text)} characters, {len(transcript)} segments"
+        )
+
+        return doc
+
+    except Exception as e:
+        logger.error(f"Failed to load YouTube video {url}: {str(e)}")
+        raise
