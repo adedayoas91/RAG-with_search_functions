@@ -8,5 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
-data/
+data/downloads
 dir/
+TEST_*
+DOCUMENT_SOURCES.md 
+FEATURE_SUMMARY.md
