@@ -280,7 +280,7 @@ See [tests/README.md](tests/README.md) for detailed testing documentation.
 ## 📁 Project Structure
 
 ```
-agentic-rag/
+RAG-with_search_functions/
 ├── main.py                      # Main entry point
 ├── config.py                    # Configuration
 ├── .env                         # API keys (create from .env.example)
@@ -371,14 +371,14 @@ View costs at end of each session or in `data/cost_log.json`.
 
 ### GitHub Actions Workflow
 
-- **Test Job**: Runs on Python 3.11 & 3.12
+- **Test Job**: Runs on Python 3.12
 - **Lint Job**: Code formatting checks
 - **Type Check Job**: Static type analysis
 - **Build Job**: Package verification
 
 ### Triggers
 
-- Push to `main`, `dev`, `feature/*`
+- Push to `main`, `dev`
 - Pull requests to `main`, `dev`
 
 See [.github/workflows/ci.yml](.github/workflows/ci.yml) for configuration.
