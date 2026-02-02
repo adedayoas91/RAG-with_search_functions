@@ -1,33 +1,32 @@
-# Agentic RAG System v1.0
+# RAG System with Search v1.0
 
-A production-ready Retrieval-Augmented Generation (RAG) system with flexible document sourcing, parallel processing, and comprehensive testing infrastructure.
+A production-ready Retrieval-Augmented Generation (RAG) system with flexible document sourcing, parallel processing, and a comprehensive testing infrastructure. This system is designed to answer questions based on a given context, which it can source from the web or local files.
 
 ## ✨ Key Features
 
 ### 🔄 Flexible Document Sources
-- **Online Search**: Fetch up to 100 sources from the web (articles, PDFs, YouTube)
-- **Local Upload**: Load documents from your local filesystem
-- **Hybrid Mode**: Combine both online and local sources
+- **Online Search**: Fetch up to 100 sources from the web (articles, PDFs, YouTube).
+- **Local Upload**: Load documents from your local filesystem.
+- **Hybrid Mode**: Combine both online and local sources.
 
 ### 🚀 Performance Optimized
-- Parallel document downloading (5 workers)
-- Ray-based parallel chunking (4 workers)
-- Distributed embedding generation
-- Efficient vector storage with ChromaDB
+- Parallel document downloading (5 workers).
+- Ray-based parallel chunking (4 workers).
+- Distributed embedding generation.
+- Efficient vector storage with ChromaDB.
 
 ### 📊 Advanced Features
-- Source filtering by relevance
-- Interactive source approval
-- Numeric citations [1], [2,3], [2-5]
-- Real-time cost tracking
-- Session analytics
-- Automatic paywall detection
+- Source filtering by relevance.
+- Interactive source approval.
+- Numeric citations [1], [2,3], [2-5].
+- Real-time cost tracking.
+- Session analytics.
 
 ### 🧪 Production Ready
-- Comprehensive test suite (96 tests)
-- GitHub Actions CI/CD pipeline
-- 70% code coverage requirement
-- Type checking and linting
+- Comprehensive test suite (96 tests).
+- GitHub Actions CI/CD pipeline.
+- 70% code coverage requirement.
+- Type checking and linting.
 
 ## 📋 Table of Contents
 
@@ -357,27 +356,6 @@ agentic-rag/
 - Paywall detection
 - Source metadata
 
-## 🎯 Workflow
-
-```mermaid
-graph TD
-    A[User Query] --> B{Document Source Mode?}
-    B -->|Online| C[Tavily Search]
-    B -->|Local| D[Load Local Files]
-    B -->|Both| E[Both Processes]
-    C --> F[Filter & Summarize]
-    F --> G[User Approval]
-    G --> H[Download/Parse]
-    D --> I[Combine Documents]
-    H --> I
-    I --> J[Chunk Documents]
-    J --> K[Generate Embeddings]
-    K --> L[Vector Storage]
-    L --> M[Retrieve Context]
-    M --> N[Generate Answer]
-    N --> O[Display with Citations]
-```
-
 ## 💰 Cost Tracking
 
 The system tracks API costs in real-time:
@@ -404,36 +382,6 @@ View costs at end of each session or in `data/cost_log.json`.
 - Pull requests to `main`, `dev`
 
 See [.github/workflows/ci.yml](.github/workflows/ci.yml) for configuration.
-
-## 📊 Features in Detail
-
-### Parallel Processing
-
-- **Parallel Downloads**: 5 concurrent workers for article downloading
-- **Ray Chunking**: 4 workers for document chunking
-- **Distributed Embeddings**: Batch processing with Ray actors
-
-### Citation Format
-
-The system uses academic-style numeric citations:
-
-```
-Machine learning is a subset of AI [1]. Recent advances include
-transformers [2,3] and diffusion models [4-6].
-
-## Sources
-[1] https://example.com/ml-intro
-[2] https://arxiv.org/paper1
-[3] https://arxiv.org/paper2
-...
-```
-
-### Source Filtering
-
-- Relevance scoring with embeddings
-- Duplicate URL detection
-- Paywall detection (online sources)
-- Accessibility checks
 
 ## 🐛 Troubleshooting
 
@@ -496,13 +444,6 @@ uv run pyright src/
 - Write docstrings
 - Keep functions focused
 
-## 📖 Documentation
-
-- [DOCUMENT_SOURCES.md](DOCUMENT_SOURCES.md) - Document sourcing modes guide
-- [TESTING_SUMMARY.md](TESTING_SUMMARY.md) - Testing infrastructure
-- [tests/README.md](tests/README.md) - Testing guide
-- [config.py](config.py) - Configuration options
-
 ## 📜 License
 
 [Add your license here]
@@ -521,42 +462,3 @@ For issues and questions:
 - Open an issue on GitHub
 - Check existing documentation
 - Review test examples
-
-## 🗺️ Roadmap
-
-### Planned Features
-
-- [ ] Support for more document formats (DOCX, HTML)
-- [ ] Conversation memory (multi-turn dialogue)
-- [ ] Web UI (Gradio/Streamlit)
-- [ ] Export answers to PDF/Markdown
-- [ ] Advanced analytics dashboard
-- [ ] Batch query processing
-- [ ] Custom embedding models
-- [ ] Hybrid search (vector + keyword)
-
-### Recent Updates
-
-- ✅ **v1.0** - Initial release
-  - Flexible document sources (online/local/both)
-  - Parallel processing with Ray
-  - Comprehensive test suite
-  - CI/CD pipeline
-  - Numeric citations
-  - Cost tracking
-
-## 📈 Performance
-
-Typical performance metrics:
-
-- **Online search**: 30-60 seconds for 100 sources
-- **Document loading**: 1-2 seconds per PDF
-- **Chunking**: 5-10 seconds for 20 documents (parallel)
-- **Embedding**: 10-20 seconds for 500 chunks
-- **Answer generation**: 10-30 seconds
-
-Total session: 2-5 minutes (varies by source count)
-
----
-
-Made with ❤️ by the Agentic RAG Team
