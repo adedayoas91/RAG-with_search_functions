@@ -1,6 +1,12 @@
-# RAG System with Search v1.0
+# RAG System with Search v1.2
 
 A production-ready Retrieval-Augmented Generation (RAG) system with flexible document sourcing, parallel processing, and a comprehensive testing infrastructure. This system is designed to answer questions based on a given context, which it can source from the web or local files.
+
+**Latest Updates:**
+- ✅ **LangChain 1.x compatibility** - Updated to modern LangChain APIs
+- ✅ **95 passing tests** - Comprehensive test coverage across all modules
+- ✅ **GitHub Actions CI/CD** - Automated testing and quality checks
+- ✅ **UV package manager** - Fast, reliable dependency management
 
 ## ✨ Key Features
 
@@ -23,10 +29,10 @@ A production-ready Retrieval-Augmented Generation (RAG) system with flexible doc
 - Session analytics.
 
 ### 🧪 Production Ready
-- Comprehensive test suite (96 tests).
-- GitHub Actions CI/CD pipeline.
-- 70% code coverage requirement.
-- Type checking and linting.
+- Comprehensive test suite (95 tests - 80 unit, 15 integration).
+- GitHub Actions CI/CD pipeline with automated testing.
+- 46% code coverage (continuously improving).
+- Type checking with Pyright and linting with Ruff.
 
 ## 📋 Table of Contents
 
@@ -52,14 +58,14 @@ A production-ready Retrieval-Augmented Generation (RAG) system with flexible doc
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd agentic-rag
+cd rag-with_search
 
 # Install dependencies with uv
 uv sync
 
-# Create .env file
-cp .env.example .env
-# Add your API keys to .env
+# Create .env file with your API keys
+echo "OPENAI_API_KEY=your_openai_api_key" > .env
+echo "TAVILY_API_KEY=your_tavily_api_key" >> .env
 ```
 
 ### Required API Keys
@@ -255,13 +261,16 @@ Path: ./example_documents
 
 ```bash
 # Run all tests
-uv run pytest tests/ -v
+uv run python -m pytest tests/ -v
 
 # Run unit tests only
-uv run pytest tests/unit -m unit
+uv run python -m pytest tests/unit -v
+
+# Run integration tests only
+uv run python -m pytest tests/integration -v
 
 # Run with coverage
-uv run pytest tests/ --cov=src --cov-report=html
+uv run python -m pytest tests/ --cov=src --cov-report=html --cov-report=term
 
 # View coverage report
 open htmlcov/index.html
@@ -269,11 +278,11 @@ open htmlcov/index.html
 
 ### Test Suite
 
-- **96 total tests**
-  - 79 unit tests
-  - 17 integration tests
-- **Test coverage**: 70% minimum requirement
-- **CI/CD**: GitHub Actions on every push/PR
+- **95 total tests** (all passing ✅)
+  - 80 unit tests
+  - 15 integration tests
+- **Test coverage**: 46% (improving toward 70% target)
+- **CI/CD**: GitHub Actions on every push/PR to main/dev branches
 
 See [tests/README.md](tests/README.md) for detailed testing documentation.
 
@@ -296,19 +305,31 @@ RAG-with_search_functions/
 │   │   ├── pdf_loader.py       # PDF extraction
 │   │   ├── text_loader.py      # Text file loading
 │   │   ├── yt_bot.py           # YouTube transcripts
-│   │   └── chunker.py          # Document chunking
+│   │   ├── chunker.py          # Document chunking
+│   │   ├── google_search.py    # Google search integration
+│   │   ├── source_filter.py    # Source relevance filtering
+│   │   ├── source_summarizer.py # Source summarization
+│   │   └── article_loader.py   # Article processing
+│   │
+│   ├── generation/             # Answer generation
+│   │   ├── agent.py            # LangChain agent setup
+│   │   ├── answer_generator.py # RAG answer generation
+│   │   ├── generate.py         # Generation pipeline
+│   │   └── tools.py            # Agent tools
+│   │
+│   ├── search/                 # Search functionality
+│   │   ├── search_agent.py     # Search agent
+│   │   └── search_tools.py     # Search tools
 │   │
 │   ├── vectorstore/            # Embeddings and vector storage
 │   │   ├── embeddings.py       # OpenAI embeddings
 │   │   ├── chroma_store.py     # ChromaDB integration
 │   │   └── parallel_embedding.py  # Ray parallelization
 │   │
-│   ├── generation/             # Answer generation
-│   │   └── answer_generator.py  # RAG answer generation
-│   │
 │   └── utils/                  # Utilities
 │       ├── cost_tracker.py     # API cost tracking
 │       ├── cli_display.py      # User interface
+│       ├── data_persistence.py # Data persistence
 │       └── logging_config.py   # Logging setup
 │
 ├── tests/                      # Test suite
@@ -369,17 +390,22 @@ View costs at end of each session or in `data/cost_log.json`.
 
 ## 🚦 CI/CD Pipeline
 
-### GitHub Actions Workflow
+### GitHub Actions Workflow ✅
 
-- **Test Job**: Runs on Python 3.12
-- **Lint Job**: Code formatting checks
-- **Type Check Job**: Static type analysis
-- **Build Job**: Package verification
+- **Test Job**: Runs on Python 3.12 with UV package manager
+- **Lint Job**: Code formatting with Ruff
+- **Type Check Job**: Static type analysis with Pyright
+- **Build Job**: Package verification and import testing
+
+### Current Status
+- ✅ **All tests passing** (95/95)
+- ✅ **Coverage reports** generated automatically
+- ✅ **Multi-stage pipeline** with proper dependencies
 
 ### Triggers
 
-- Push to `main`, `dev`
-- Pull requests to `main`, `dev`
+- Push to `main`, `dev` branches
+- Pull requests to `main`, `dev` branches
 
 See [.github/workflows/ci.yml](.github/workflows/ci.yml) for configuration.
 
@@ -420,10 +446,10 @@ ls -R your_documents_directory/
 uv sync
 
 # Run tests
-uv run pytest
+uv run python -m pytest tests/ -v
 
 # Run linting
-uv run ruff check src/
+uv run ruff check src/ tests/
 
 # Run type checking
 uv run pyright src/
@@ -450,11 +476,13 @@ uv run pyright src/
 
 ## 🙏 Acknowledgments
 
-- OpenAI for GPT and embeddings
-- Tavily for web search API
-- ChromaDB for vector storage
-- Ray for distributed processing
-- LangChain for document processing
+- **OpenAI** for GPT models and embeddings API
+- **Tavily** for advanced web search API
+- **ChromaDB** for efficient vector storage
+- **Ray** for distributed processing and parallelization
+- **LangChain 1.x** for modern RAG framework and document processing
+- **UV** for fast, reliable Python package management
+- **GitHub Actions** for CI/CD automation
 
 ## 📞 Support
 
