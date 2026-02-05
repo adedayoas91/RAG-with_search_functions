@@ -91,11 +91,11 @@ class ChunkingConfig(BaseModel):
     """Document chunking configuration."""
 
     chunk_size: int = Field(
-        default=1000,
+        default=80,
         description="Size of text chunks in characters"
     )
     chunk_overlap: int = Field(
-        default=200,
+        default=20,
         description="Overlap between consecutive chunks"
     )
     separators: List[str] = Field(

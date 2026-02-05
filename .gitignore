@@ -9,12 +9,30 @@ wheels/
 
 # Virtual environments
 .venv
-data/downloads
-dir/
+
+# Runtime data files
+data/
+!data/.gitkeep
+
+# Test artifacts
+.coverage
+htmlcov/
+.pytest_cache/
+*.egg-info
+
+# Keep dependency lock file tracked
+# uv.lock
+
+# IDE files
+.claude/
+
+# Documentation files (regenerated)
 TEST_STATUS_SUMMARY.md
 TESTING_SUMMARY.md
 TEST_FIXES_NEEDED.md
-DOCUMENT_SOURCES.md 
+DOCUMENT_SOURCES.md
 FEATURE_SUMMARY.md
-test_rag.py
-.claude/
+
+# Temporary test files
+test_*.py
+test_query.py
