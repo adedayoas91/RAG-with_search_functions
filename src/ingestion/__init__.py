@@ -43,7 +43,15 @@ from .local_document_loader import (
     get_document_source_mode,
     load_local_documents,
     get_local_documents_path,
+    get_user_upload_documents,
     print_document_summary
+)
+
+# Document processing
+from .docling_processor import (
+    DoclingDocumentProcessor,
+    create_docling_processor,
+    is_docling_available
 )
 
 __all__ = [
@@ -79,7 +87,13 @@ __all__ = [
     "get_document_source_mode",
     "load_local_documents",
     "get_local_documents_path",
+    "get_user_upload_documents",
     "print_document_summary",
+
+    # Document processing
+    "DoclingDocumentProcessor",
+    "create_docling_processor",
+    "is_docling_available",
 
     # Chunking
     "chunk_documents",

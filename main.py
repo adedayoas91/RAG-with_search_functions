@@ -53,8 +53,10 @@ from src.ingestion import (
     load_article,
     load_youtube_video,
     get_document_source_mode,
-    load_local_documents,
-    print_document_summary
+    get_user_upload_documents,
+    print_document_summary,
+    create_docling_processor,
+    is_docling_available
 )
 from src.vectorstore import (
     OpenAIEmbedding,
@@ -128,6 +130,22 @@ def main():
 
         # 2b. Get document source mode
         source_mode = get_document_source_mode()
+
+        # 2c. Ask if user wants to upload additional local documents
+        print("\n📋 Additional Options")
+        print("-" * 40)
+        add_local = input("Would you like to upload additional local documents? (y/n): ").strip().lower()
+
+        if add_local == 'y':
+            if source_mode == 'online':
+                source_mode = 'both'  # Convert to both mode
+                print("✅ Will combine online sources with your local documents")
+            elif source_mode == 'local':
+                print("✅ Will load your local documents")
+            else:  # already 'both'
+                print("✅ Will load both online sources and your local documents")
+        else:
+            print("✅ Proceeding with selected source mode")
 
         # Initialize variables for tracking
         search_results = []
@@ -273,7 +291,7 @@ def main():
 
         # 3b. Load local documents (if local or both)
         if source_mode in ['local', 'both']:
-            local_documents = load_local_documents()
+            local_documents = get_user_upload_documents(query)
 
             if local_documents:
                 documents.extend(local_documents)
@@ -291,7 +309,53 @@ def main():
         if source_mode == 'both' and documents:
             print_document_summary(documents, "combined")
 
-        # 9. Chunk documents in parallel using Ray
+        # 9a. Enhanced document processing with Docling (if available)
+        if is_docling_available() and documents:
+            display_progress("Enhancing document content with Docling...")
+            docling_processor = create_docling_processor()
+
+            enhanced_documents = []
+            enhanced_count = 0
+
+            for i, doc in enumerate(documents, 1):
+                display_progress(f"Processing document {i}/{len(documents)} with Docling...", i, len(documents))
+
+                # Try to get file path from metadata
+                file_path = None
+                if hasattr(doc, 'metadata') and doc.metadata:
+                    source = doc.metadata.get('source', '')
+                    if source.startswith('file://'):
+                        file_path = Path(source[7:])  # Remove 'file://' prefix
+                    elif 'file_path' in doc.metadata:
+                        file_path = Path(doc.metadata['file_path'])
+
+                if file_path and file_path.exists():
+                    # Try to enhance with Docling
+                    enhanced_doc = docling_processor.process_document(file_path)
+                    if enhanced_doc:
+                        enhanced_documents.append(enhanced_doc)
+                        enhanced_count += 1
+                        logger.info(f"Enhanced document {i} with Docling")
+                    else:
+                        enhanced_documents.append(doc)
+                        logger.info(f"Kept original document {i} (Docling failed)")
+                else:
+                    # Keep original document
+                    enhanced_documents.append(doc)
+                    logger.info(f"Kept original document {i} (no file path)")
+
+            documents = enhanced_documents
+            if enhanced_count > 0:
+                print_success(f"Enhanced {enhanced_count}/{len(documents)} documents with Docling")
+            else:
+                print("ℹ️  Docling enhancement skipped (no suitable files found)")
+        else:
+            if not is_docling_available():
+                logger.info("Docling not available, skipping document enhancement")
+            else:
+                logger.info("No documents to enhance")
+
+        # 10. Chunk documents in parallel using Ray
         display_progress("Chunking documents in parallel...")
         chunks = parallel_chunk_documents(
             documents=documents,
@@ -302,7 +366,7 @@ def main():
 
         print_success(f"Created {len(chunks)} chunks")
 
-        # 10. Add to vector store
+        # 11. Add to vector store
         display_progress("Creating embeddings and storing in vector database...")
         vector_store.add_documents(chunks)
 
@@ -311,7 +375,7 @@ def main():
             f"Vector store updated: {stats['total_documents']} total documents"
         )
 
-        # 11. Retrieve relevant context
+        # 12. Retrieve relevant context
         display_progress("Retrieving relevant context for your query...")
         context_docs_with_scores = vector_store.similarity_search(
             query=query,
@@ -326,7 +390,7 @@ def main():
 
         print_success(f"Retrieved {len(context_docs)} relevant chunks")
 
-        # 12. Generate answer
+        # 13. Generate answer
         display_progress("Generating answer...")
         answer_generator = RAGAnswerGenerator(
             client=openai_client,
@@ -341,10 +405,10 @@ def main():
             max_tokens=config.model.max_tokens
         )
 
-        # 13. Display answer
+        # 14. Display answer
         print_answer(answer)
 
-        # 14. Session summary
+        # 15. Session summary
         duration = (datetime.now() - start_time).total_seconds()
         session_costs = cost_tracker.get_session_costs()
 
@@ -357,7 +421,7 @@ def main():
             duration=duration
         )
 
-        # 15. Update analytics
+        # 16. Update analytics
         session_data = SessionData(
             session_id=session_id,
             query=query,
@@ -378,7 +442,7 @@ def main():
 
         print_success("\nSession completed successfully!")
 
-        # 16. Cleanup confirmation (only for online sources)
+        # 17. Cleanup confirmation (only for online sources)
         if query_download_dir and query_download_dir.exists() and any(query_download_dir.iterdir()):
             print(f"\n📁 Downloaded articles location: {query_download_dir}")
             cleanup = input("Delete downloaded articles directory? (y/n): ").strip().lower()

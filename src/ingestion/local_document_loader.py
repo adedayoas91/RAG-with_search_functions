@@ -6,6 +6,7 @@ supporting PDF, TXT, DOCX, and other common document formats.
 """
 
 import os
+import time
 from pathlib import Path
 from typing import List, Optional
 from langchain_core.documents import Document
@@ -15,6 +16,103 @@ from src.ingestion.pdf_loader import load_pdf_from_file
 from src.ingestion.text_loader import load_text_file
 
 logger = get_logger(__name__)
+
+
+def get_user_upload_documents(query: str = "user_uploads") -> List[Document]:
+    """
+    Handle user document uploads by creating an upload directory
+    and allowing user to add files before loading.
+
+    Args:
+        query: Query string to create directory name
+
+    Returns:
+        List of loaded Document objects
+    """
+    print("\n📁 User Document Upload")
+    print("=" * 60)
+    print("I'll create an upload directory where you can add your documents.")
+    print("Supported formats: PDF (.pdf), Text (.txt)")
+    print()
+
+    # Create user upload directory in data/downloads (same as downloads)
+    from src.ingestion.article_downloader import sanitize_filename
+    dir_name = sanitize_filename(query.lower().replace(' ', '_'))[:50]
+    upload_dir = Path("./data/downloads") / dir_name
+    upload_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"✅ Created upload directory: {upload_dir.absolute()}")
+    print()
+    print("📋 Instructions:")
+    print("1. Open a new terminal/file explorer window")
+    print(f"2. Copy your documents to: {upload_dir.absolute()}")
+    print("3. Return here and press Enter when ready")
+    print()
+    print("💡 Tip: Supported formats are PDF and TXT files")
+    print()
+
+    # Wait for user to add files
+    input("Press Enter when you've added your documents: ").strip()
+
+    # Check if any files were added
+    document_files = scan_directory_for_documents(upload_dir, recursive=True)
+
+    if not document_files:
+        print(f"⚠️  No supported documents found in {upload_dir}")
+        print("Please add PDF or TXT files to the directory and try again.")
+        return []
+
+    print(f"\n📄 Found {len(document_files)} documents:")
+    for i, file_path in enumerate(document_files, 1):
+        file_size = file_path.stat().st_size / 1024  # KB
+        print(f"  {i}. {file_path.name} ({file_size:.1f} KB)")
+
+    # Confirm loading
+    print()
+    confirm = input(f"Load all {len(document_files)} documents? (y/n): ").strip().lower()
+
+    if confirm != 'y':
+        print("❌ Document loading cancelled")
+        return []
+
+    # Load documents
+    print(f"\n📥 Loading documents...")
+    documents = []
+    failed_count = 0
+
+    for idx, file_path in enumerate(document_files, 1):
+        print(f"  [{idx}/{len(document_files)}] Loading: {file_path.name}...", end=" ")
+
+        try:
+            if file_path.suffix.lower() == '.pdf':
+                doc = load_pdf_from_file(
+                    str(file_path),
+                    source_url=f"file://{file_path.absolute()}"
+                )
+            elif file_path.suffix.lower() == '.txt':
+                doc = load_text_file(
+                    str(file_path),
+                    source_url=f"file://{file_path.absolute()}"
+                )
+            else:
+                raise ValueError(f"Unsupported file type: {file_path.suffix}")
+
+            documents.append(doc)
+            print("✅")
+
+        except Exception as e:
+            logger.warning(f"Failed to load {file_path}: {str(e)}")
+            print("❌")
+            failed_count += 1
+            continue
+
+    success_count = len(documents)
+    if success_count > 0:
+        print(f"\n✅ Successfully loaded {success_count} documents")
+        if failed_count > 0:
+            print(f"⚠️  Failed to load {failed_count} documents")
+
+    return documents
 
 
 def get_local_documents_path() -> Optional[Path]:
