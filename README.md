@@ -34,6 +34,91 @@ A production-ready Retrieval-Augmented Generation (RAG) system with flexible doc
 - 46% code coverage (continuously improving).
 - Type checking with Pyright and linting with Ruff.
 
+## 🔄 System Workflow
+
+```
+┌─────────────────┐
+│   USER QUERY    │
+│  "What is AI?"  │
+└─────────┬───────┘
+          │
+          ▼
+┌─────────────────┐     ┌─────────────────┐
+│ DOCUMENT SOURCE │────▶│  MODE SELECTION │
+│   SELECTION     │     │ • 🌐 Online     │
+│ • Online        │     │ • 📁 Local      │
+│ • Local         │     │ • 🔄 Both       │
+│ • Both          │     └─────────┬───────┘
+└─────────────────┘               │
+                                  ▼
+                    ┌─────────────────────┐
+                    │  DOCUMENT GATHERING │
+                    │                     │
+                    │ ┌─────────┬─────────┐ │
+                    │ │ ONLINE  │ LOCAL   │ │
+                    │ ├─────────┼─────────┤ │
+                    │ │ Tavily  │ File    │ │
+                    │ │ Search  │ Scan    │ │
+                    │ │ Filter  │ Load    │ │
+                    │ │ Download│         │ │
+                    │ └─────────┴─────────┘ │
+                    └─────────────────────┘
+                                  │
+                                  ▼
+                    ┌─────────────────────┐
+                    │  DOCUMENT PROCESSING │
+                    │                     │
+                    │ ┌─────────┬─────────┐ │
+                    │ │ CHUNK   │ EMBED   │ │
+                    │ ├─────────┼─────────┤ │
+                    │ │ Split   │ Vector  │ │
+                    │ │ Text    │ Store   │ │
+                    │ │ (1000)  │ (Chroma)│ │
+                    │ └─────────┴─────────┘ │
+                    └─────────────────────┘
+                                  │
+                                  ▼
+                    ┌─────────────────────┐
+                    │    RETRIEVAL        │
+                    │                     │
+                    │ • Similarity Search │
+                    │ • Top-K Results     │
+                    │ • Context Assembly  │
+                    │                     │
+                    └─────────────────────┘
+                                  │
+                                  ▼
+                    ┌─────────────────────┐
+                    │   GENERATION        │
+                    │                     │
+                    │ • GPT-4 Answer      │
+                    │ • Citation Links    │
+                    │ • Cost Tracking     │
+                    │                     │
+                    └─────────────────────┘
+                                  │
+                                  ▼
+                    ┌─────────────────────┐
+                    │   FINAL RESPONSE    │
+                    │                     │
+                    │ "AI is... [1][2][3]"│
+                    │                     │
+                    │ Sources: [1] paper.pdf │
+                    │         [2] article.html │
+                    │         [3] research.pdf │
+                    └─────────────────────┘
+```
+
+### Workflow Steps:
+
+1. **Query Input** → User provides research question
+2. **Source Selection** → Choose online, local, or both document sources
+3. **Document Gathering** → Collect relevant documents based on selection
+4. **Processing Pipeline** → Chunk text → Generate embeddings → Store in vector DB
+5. **Retrieval** → Find most relevant document chunks using similarity search
+6. **Generation** → Synthesize answer with citations using retrieved context
+7. **Response** → Deliver formatted answer with source references
+
 ## 📋 Table of Contents
 
 - [Installation](#installation)
