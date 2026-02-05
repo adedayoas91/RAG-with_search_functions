@@ -20,6 +20,9 @@ htmlcov/
 .pytest_cache/
 *.egg-info
 
+# Keep dependency lock file tracked
+# uv.lock
+
 # IDE files
 .claude/
 
