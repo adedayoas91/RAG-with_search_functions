@@ -51,6 +51,7 @@ from .local_document_loader import (
 from .docling_processor import (
     DoclingDocumentProcessor,
     create_docling_processor,
+    is_enhanced_processing_available,
     is_docling_available
 )
 
@@ -93,6 +94,7 @@ __all__ = [
     # Document processing
     "DoclingDocumentProcessor",
     "create_docling_processor",
+    "is_enhanced_processing_available",
     "is_docling_available",
 
     # Chunking

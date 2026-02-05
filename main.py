@@ -22,6 +22,7 @@ This script orchestrates the entire RAG pipeline with flexible document sources:
 import uuid
 import shutil
 from datetime import datetime
+from pathlib import Path
 from openai import OpenAI
 
 from config import get_config
@@ -56,7 +57,7 @@ from src.ingestion import (
     get_user_upload_documents,
     print_document_summary,
     create_docling_processor,
-    is_docling_available
+    is_enhanced_processing_available
 )
 from src.vectorstore import (
     OpenAIEmbedding,
@@ -309,8 +310,8 @@ def main():
         if source_mode == 'both' and documents:
             print_document_summary(documents, "combined")
 
-        # 9a. Enhanced document processing with Docling (if available)
-        if is_docling_available() and documents:
+        # 9a. Enhanced document processing (if available)
+        if is_enhanced_processing_available() and documents:
             display_progress("Enhancing document content with Docling...")
             docling_processor = create_docling_processor()
 
