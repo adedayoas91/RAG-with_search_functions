@@ -69,11 +69,11 @@ A production-ready Retrieval-Augmented Generation (RAG) system with flexible doc
                     │  DOCUMENT PROCESSING │
                     │                     │
                     │ ┌─────────┬─────────┐ │
-                    │ │ CHUNK   │ EMBED   │ │
-                    │ ├─────────┼─────────┤ │
-                    │ │ Split   │ Vector  │ │
-                    │ │ Text    │ Store   │ │
-                    │ │ (1000)  │ (Chroma)│ │
+│ │ CHUNK   │ EMBED   │ │
+│ ├─────────┼─────────┤ │
+│ │ Split   │ Vector  │ │
+│ │ Text    │ Store   │ │
+│ │ (80)    │ (Chroma)│ │
                     │ └─────────┴─────────┘ │
                     └─────────────────────┘
                                   │
@@ -258,8 +258,8 @@ max_results = 100
 relevance_threshold = 0.7
 
 # Chunking
-chunk_size = 1000
-chunk_overlap = 200
+chunk_size = 80
+chunk_overlap = 20
 
 # Retrieval
 retrieval_k = 10
