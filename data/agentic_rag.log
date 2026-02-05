@@ -2820,3 +2820,5 @@ NameError: name 'client' is not defined
 [2026-01-31 20:04:59] [INFO] [src.utils.data_persistence] - Analytics updated: Query #4 | Cost: $0.0141
 [2026-01-31 20:04:59] [INFO] [session] - === Session 69610284 Completed ===
 [2026-01-31 20:04:59] [INFO] [session] - Duration: 254.48s | Cost: $0.0141 | Sources: 3
+[2026-02-05 09:36:49] [INFO] [root] - Logging initialized - Level: INFO, File: ./data/agentic_rag.log
+[2026-02-05 09:39:35] [INFO] [root] - Logging initialized - Level: INFO, File: ./data/agentic_rag.log

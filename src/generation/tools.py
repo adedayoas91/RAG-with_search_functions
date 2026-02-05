@@ -9,7 +9,7 @@ def get_tools(config):
     Returns a list of tools for the agent to use.
     """
     tavily_tool = TavilySearchResults(
-        max_results=config.max_results,
+        max_results=config.search.max_search_results,
     )
 
     wikipedia_tool = WikipediaQueryRun(
