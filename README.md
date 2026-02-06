@@ -142,8 +142,8 @@ A production-ready Retrieval-Augmented Generation (RAG) system with flexible doc
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd rag-with_search
+git clone https://github.com/adedayoas91/RAG-with_search_functions
+cd RAG-with_search_functions/
 
 # Install dependencies with uv
 uv sync
@@ -263,23 +263,8 @@ chunk_overlap = 20
 
 # Retrieval
 retrieval_k = 10
-
-# Models
-generation_model = "gpt-4o-mini"
-embedding_model = "text-embedding-3-small"
 ```
 
-### Environment Variables
-
-```env
-# Required
-OPENAI_API_KEY=sk-...
-TAVILY_API_KEY=tvly-...
-
-# Optional
-CHUNK_SIZE=1000
-RETRIEVAL_K=10
-```
 
 ## 💡 Usage Examples
 
@@ -325,19 +310,6 @@ Mode: 3 (Both)
 → Loads local docs (8 PDFs)
 → Analyzes 20 combined documents
 → Generates comprehensive comparison
-```
-
-### Example 4: Try the Sample Documents
-
-```bash
-uv run main.py
-```
-```
-Query: What features does the RAG system support?
-Mode: 2 (Local)
-Path: ./example_documents
-→ Loads sample_document.txt
-→ Generates answer about system features
 ```
 
 ## 🧪 Testing
