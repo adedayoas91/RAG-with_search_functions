@@ -51,9 +51,9 @@ A production-ready Retrieval-Augmented Generation (RAG) system with flexible doc
 │ • Both          │     └─────────┬───────┘
 └─────────────────┘               │
                                   ▼
-                    ┌─────────────────────┐
-                    │  DOCUMENT GATHERING │
-                    │                     │
+                    ┌───────────────────────┐
+                    │  DOCUMENT GATHERING   │
+                    │                       │
                     │ ┌─────────┬─────────┐ │
                     │ │ ONLINE  │ LOCAL   │ │
                     │ ├─────────┼─────────┤ │
@@ -62,20 +62,20 @@ A production-ready Retrieval-Augmented Generation (RAG) system with flexible doc
                     │ │ Filter  │ Load    │ │
                     │ │ Download│         │ │
                     │ └─────────┴─────────┘ │
-                    └─────────────────────┘
+                    └───────────────────────┘
                                   │
                                   ▼
-                    ┌─────────────────────┐
-                    │  DOCUMENT PROCESSING │
-                    │                     │
+                    ┌───────────────────────┐
+                    │  DOCUMENT PROCESSING  │
+                    │                       │
                     │ ┌─────────┬─────────┐ │
-│ │ CHUNK   │ EMBED   │ │
-│ ├─────────┼─────────┤ │
-│ │ Split   │ Vector  │ │
-│ │ Text    │ Store   │ │
-│ │ (80)    │ (Chroma)│ │
+                    │ │ CHUNK   │ EMBED   │ │
+                    │ ├─────────┼─────────┤ │
+                    │ │ Split   │ Vector  │ │
+                    │ │ Text    │ Store   │ │
+                    │ │ (80)    │ (Chroma)│ │
                     │ └─────────┴─────────┘ │
-                    └─────────────────────┘
+                    └───────────────────────┘
                                   │
                                   ▼
                     ┌─────────────────────┐
@@ -98,15 +98,15 @@ A production-ready Retrieval-Augmented Generation (RAG) system with flexible doc
                     └─────────────────────┘
                                   │
                                   ▼
-                    ┌─────────────────────┐
-                    │   FINAL RESPONSE    │
-                    │                     │
-                    │ "AI is... [1][2][3]"│
-                    │                     │
-                    │ Sources: [1] paper.pdf │
-                    │         [2] article.html │
-                    │         [3] research.pdf │
-                    └─────────────────────┘
+                    ┌───────────────────────────┐
+                    │   FINAL RESPONSE          │
+                    │                           │
+                    │ "AI is... [1][2][3]"      │
+                    │                           │
+                    │ Sources: [1] paper.pdf    │
+                    │          [2] article.html │
+                    │          [3] research.pdf │
+                    └───────────────────────────┘
 ```
 
 ### Workflow Steps:
